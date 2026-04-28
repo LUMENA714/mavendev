@@ -7,14 +7,17 @@ trigger:
 - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: pool1
+  
 
 steps:
 - task: Maven@4
-  displayName: 'Build Maven Project'
   inputs:
     mavenPomFile: 'pom.xml'
-    goals: 'clean install'
+    mavenOptions: '-Xmx3072m'
+    javaHomeOption: 'Path'
+    jdkUserInputPath: 'C:\Program Files\Java\jdk-25.0.2'
+    jdkArchitectureOption: 'x64'
     publishJUnitResults: true
-    javaHomeOption: 'JDKVersion'
-    jdkVersionOption: '17'
+    testResultsFiles: '**/surefire-reports/TEST-*.xml'
+    goals: 'compile test'
